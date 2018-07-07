@@ -1,10 +1,17 @@
 USE AdventureWorks2016
 GO
+/*
+	Autor: Paulo Henrique Sales Sampaio
+	Data: 07/07/2018
+	Base: AdventureWorks2016
+
+	Função que retorna dados do funcionário
+*/
 
 --=================================================
 -- FUNCTION COM VALOR DE TABELA
 --=================================================
-CREATE FUNCTION UDF_FUNCAO_TABELA_FUNCIONARIO(@ID_FUNCIONARIO INT)
+ALTER FUNCTION UDF_FUNCAO_TABELA_FUNCIONARIO(@ID_FUNCIONARIO INT)
 RETURNS @TB_FUNCIONARIO TABLE
 (
 	 NOME_COMPLETO VARCHAR(100)
@@ -44,3 +51,8 @@ END
 GO
 
 SELECT * FROM dbo.UDF_FUNCAO_TABELA_FUNCIONARIO(1)
+
+GO
+
+EXEC sp_helptext
+		'dbo.UDF_FUNCAO_TABELA_FUNCIONARIO'
