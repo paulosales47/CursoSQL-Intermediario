@@ -1,0 +1,35 @@
+USE AdventureWorks2016
+GO
+
+--=================================================
+-- CRIAÇÃO DE INDICES
+--=================================================
+CREATE TABLE TB_TESTE_INDEX(COL1 INT, COL2 INT)
+
+DECLARE @INDEX INT = 0
+
+WHILE (@INDEX < 100000)
+BEGIN
+	INSERT INTO TB_TESTE_INDEX(COL1, COL2) VALUES(ROUND(RAND() * 1000, 0), ROUND(RAND() * 1000, 0))
+	SET @INDEX += 1;
+END
+
+
+SET STATISTICS TIME ON
+
+SELECT * FROM TB_TESTE_INDEX GROUP BY COL1
+
+
+CREATE NONCLUSTERED INDEX IDX_COL ON TB_TESTE_INDEX(COL1) INCLUDE (COL2)
+DELETE FROM TB_TESTE_INDEX
+
+--=================================================
+-- CRIAÇÃO DE INDICES - VARIÁVEL DE TABELA
+--=================================================
+DECLARE @TABELA TABLE 
+(
+	 COL1 INT INDEX IDX_1 CLUSTERED(COL1 ASC, COL2 ASC)
+	,COL2 INT INDEX IDX_2 NONCLUSTERED(COL1, COL2)
+)
+
+
